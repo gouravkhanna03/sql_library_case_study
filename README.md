@@ -69,11 +69,38 @@ This project is built for **resume showcase** and **interview demonstration**, r
 
 ## 🧑‍💻 How to Use This Project
 
-- Clone the repository:
-  ```bash
-  git clone https://github.com/your-username/evergreen-city-library-sql.git
+### 1. Clone the Repository
 
-  Set Up the Database in PostgreSQL
+```bash
+git clone https://github.com/your-username/evergreen-city-library-sql.git
+cd evergreen-city-library-sql
+
+###2. Set Up the Database in PostgreSQL
+
+- Open PgAdmin 4
+- Create a new database (e.g., evergreen_library_db)
+- Open the `.sql` file in the query editor
+- Run the SQL script to create tables and insert data
+
+###3. Run the SQL Queries
+- Open `evergreen_city_library_project.sql`
+- Copy any query and paste it into PgAdmin
+- Execute the query to get insights
+
+###4. (Optional) Import CSVs
+- Use PgAdmin's Import feature for each table
+- Choose the correct `.csv` file
+- Set delimiter to `,` and check "Header" if needed
+
+
+###5. Extend or Customize
+- Add indexes to improve performance
+- Build dashboards using Power BI or Tableau
+- Use the project to showcase SQL skills in interviews
+
+
+
+
 
 
 ## Following questions are developed to solve business insights:
