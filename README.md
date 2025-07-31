@@ -97,20 +97,17 @@ cd evergreen-city-library-sql
 - Build dashboards using Power BI or Tableau
 - Use the project to showcase SQL skills in interviews
 
+---
 
+## 🧑‍💻 Following questions are developed to solve business insights:
 
+**Q1. Find the top 10 most expensive books, showing: title, price, author_name, genre_name.**
 
-
-
-## Following questions are developed to solve business insights:
-
-/* Q1. Find the top 10 most expensive books, showing: title, price, author_name, genre_name. */
-
-
+```sql
 SELECT b.title,
        b.price,
-			 a.author_name,
-			 g.genre_name
+       a.author_name,
+       g.genre_name
 FROM books AS b
 INNER JOIN authors AS a
 ON b.author_id = a.author_id
@@ -118,7 +115,7 @@ INNER JOIN genres AS g
 ON g.genre_id = b.genre_id
 ORDER BY b.price DESC
 LIMIT 10
-
+```
 
 
 /* Q2. Find the top 5 authors who have written the most books. Show: author_name, total_books. 
