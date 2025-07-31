@@ -8,7 +8,10 @@
 
 ## 🧾 Project Description
 
-The **Evergreen City Library Project** is an end-to-end SQL portfolio project where we simulate the day-to-day operations of a public library system.  
+The **Evergreen City Library Project** is an end-to-end SQL portfolio project where we simulate the day-to-day operations of a public library system. 
+
+**How the library operates:** They maintain a catalog of books by various authors and genres. Members borrow books, reserve books when they are unavailable, pay fees, and leave reviews. Staff members run daily operations, and financial transactions (fees/fines) are tracked.
+
 We perform **data analysis** using complex SQL queries to extract actionable insights related to:
 
 - Book borrowing trends
