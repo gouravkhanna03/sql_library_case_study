@@ -73,6 +73,8 @@ This project is built for **resume showcase** and **interview demonstration**, r
   ```bash
   git clone https://github.com/your-username/evergreen-city-library-sql.git
 
+  Set Up the Database in PostgreSQL
+
 
 ## Following questions are developed to solve business insights:
 
