@@ -610,6 +610,6 @@ WHERE rn = 1;
 ## 📞 Contact
 Created with ❤️ by Gaurav Khanna
 
-📧 Email: gouravkhanna03@gmail.com 
-📌 LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/gauravkhanna03/) 
-📂 Portfolio: [MyPortfolioLink](https://gouravkhanna03.github.io/portfolio/)
+📧 Email: gouravkhanna03@gmail.com <br>
+📌 LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/gauravkhanna03/) <br>
+📂 Portfolio: [MyPortfolioLink](https://gouravkhanna03.github.io/portfolio/) <br>
