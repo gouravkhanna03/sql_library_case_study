@@ -147,7 +147,7 @@ WHERE b.price >
       FROM books);
 ```
 
-**Q4. Find all genres that have more than 50 books. Show: genre_name, total_books. 
+**Q4. Find all genres that have more than 50 books. Show: genre_name, total_books. <br>
 Sort the result by total_books in descending order.**
 
 ```sql
