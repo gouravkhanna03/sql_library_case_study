@@ -162,7 +162,7 @@ HAVING COUNT(b.book_id) > 50
 ORDER BY 2 DESC;
 ```
 
-**Q5. Find the top 3 most expensive books in each genre. Show: genre_name, title, price.
+**Q5. Find the top 3 most expensive books in each genre. Show: genre_name, title, price. <br>
 rank_in_genre (rank based on price within each genre).**
 
 ```sql
@@ -183,8 +183,8 @@ FROM rn
 WHERE rank_in_genre IN (1,2,3);
 ```
 
-**Q6. Find all book loans from the last 6 months and show whether they were returned late or on time.
-Show the columns: loan_id, book_id, member_id, loan_date, due_date, return_date, status 
+**Q6. Find all book loans from the last 6 months and show whether they were returned late or on time. <br>
+Show the columns: loan_id, book_id, member_id, loan_date, due_date, return_date, status <br>
 (display 'Late' if return_date > due_date, else 'On Time'. If not returned, show 'Not Returned'.)**
 
 ```sql
@@ -203,7 +203,7 @@ FROM book_loans
 WHERE loan_date >= CURRENT_DATE - INTERVAL '6 Month';
 ```
 
-**Q7. Find the total revenue generated from book sales for each genre.
+**Q7. Find the total revenue generated from book sales for each genre. <br>
 Sort the result by total_revenue in descending order.**
 
 ```sql
@@ -218,7 +218,7 @@ GROUP BY g.genre_id,
 ORDER BY 2 DESC;
 ```
 
-**Q8. Find all members who currently have at least one active (Pending) reservation.
+**Q8. Find all members who currently have at least one active (Pending) reservation. <br>
 Sort by total_pending_reservations in descending order.**
 
 ```sql
@@ -239,9 +239,9 @@ ORDER BY 4 DESC;
 ```
 
 
-**Q9. Identify the Top 3 Most Loyal Members". Define loyalty as members who:
-Have borrowed the highest total number of books in the last 12 months.
-Have zero unpaid fines (fine = 0 or NULL in all book_loans).
+**Q9. Identify the Top 3 Most Loyal Members". Define loyalty as members who: <br>
+Have borrowed the highest total number of books in the last 12 months. <br>
+Have zero unpaid fines (fine = 0 or NULL in all book_loans). <br>
 Sort by total_books_borrowed in descending order and limit to 3.**
 
 ```sql
@@ -267,9 +267,9 @@ ORDER BY total_books_borrowed DESC
 LIMIT 3;
 ```
 
-**Q10. Find the number of book loans per month for the last 12 months, along with the 
-percentage growth compared to the previous month.
-Show: loan_month, total_loans, growth_percent.
+**Q10. Find the number of book loans per month for the last 12 months, along with the <br>
+percentage growth compared to the previous month. <br>
+Show: loan_month, total_loans, growth_percent. <br>
 Sort the result in ascending order of loan_month.**
 
 ```sql
@@ -292,9 +292,9 @@ SELECT loan_month,
 FROM loan_by_month;
 ```
 
-**Q11. Calculate each member’s total_revenue as:
-total_revenue = SUM(payments.amount) + SUM(book_loans.fine)
-Rank members based on total_revenue (highest first).
+**Q11. Calculate each member’s total_revenue as: <br>
+total_revenue = SUM(payments.amount) + SUM(book_loans.fine) <br>
+Rank members based on total_revenue (highest first). <br>
 Sort the final output by rank_position ascending and limit to Top 10 members.**
 
 ```sql
@@ -332,8 +332,8 @@ FROM revenue
 LIMIT 10;
 ```
 
-**Q12. For each book, find: book_id, title, total_borrows, avg_rating
-Only show books that have been borrowed at least 10 times.
+**Q12. For each book, find: book_id, title, total_borrows, avg_rating <br>
+Only show books that have been borrowed at least 10 times. <br>
 Sort the result by total_borrows (descending), and if there's a tie, sort by avg_rating (descending).**
 
 ```sql
@@ -353,7 +353,7 @@ HAVING COUNT(bl.book_id) >= 10
 ORDER BY total_borrows DESC;
 ```
 
-**Q13. Show: member_id, first_name, last_name, book_id, title, due_date, return_date, days_late.
+**Q13. Show: member_id, first_name, last_name, book_id, title, due_date, return_date, days_late. <br>
 Sort by days_late in descending order (most overdue first).**
 
 ```sql
@@ -380,9 +380,9 @@ WHERE (bl.return_date > bl.due_date)
 ORDER BY days_late DESC;
 ```
 
-**Q14. Generate a report of monthly total revenue by combining:
-late return fine + payments revenue
-Results by Year-Month (e.g., 2025-07). Only include the last 12 months.
+**Q14. Generate a report of monthly total revenue by combining: <br>
+late return fine + payments revenue <br>
+Results by Year-Month (e.g., 2025-07). Only include the last 12 months. <br>
 Sort the results by month ascending.**
 
 ```sql
@@ -414,11 +414,10 @@ ON f.fine_month = p.payment_month
 ORDER BY p.payment_month;
 ```
 
-**Q15. Find the top 3 most active members each month in the last 12 months based 
-on the number of books borrowed.
-For each month (YYYY-MM), calculate the total number of books borrowed by each member.
-Rank Top 3 Members
-Sort by month ASC, rank_in_month ASC.**
+**Q15. Find the top 3 most active members each month in the last 12 months based  <br>
+on the number of books borrowed. <br>
+For each month (YYYY-MM), calculate the total number of books borrowed by each member. <br>
+Rank Top 3 Members. Sort by month ASC, rank_in_month ASC.**
 
 ```sql
 WITH monthly_rank AS (
@@ -449,8 +448,8 @@ FROM monthly_rank
 WHERE rank_in_month <= 3;
 ```
 
-**Q16. For each member, check if they have borrowed at least one book from each genre.
-Show: member_id, first_name, last_name, total_genres_borrowed.
+**Q16. For each member, check if they have borrowed at least one book from each genre. <br>
+Show: member_id, first_name, last_name, total_genres_borrowed. <br>
 Only include members where total_genres_borrowed = total_genres (in the genres table).**
 
 ```sql
@@ -503,8 +502,8 @@ WHERE NOT EXISTS (
 );
 ```
 
-**Q18. Find the top 3 most borrowed books for each year based on the number of loans.
-For each year (from loan_date): Count how many times each book was borrowed.
+**Q18. Find the top 3 most borrowed books for each year based on the number of loans. <br>
+For each year (from loan_date): Count how many times each book was borrowed. <br>
 Sort by year ASC, rank_in_year ASC.**
 
 ```sql
@@ -533,9 +532,9 @@ WHERE rank_in_year <= 3
 ORDER BY year, rank_in_year ASC;
 ```
 
-**Q19. Identify members who borrowed more books each month for 3 consecutive months within the last year.
-For each member, calculate the monthly count of borrowed books.
-Check if there is any sequence of 3 consecutive months where the count of borrowed books strictly 
+**Q19. Identify members who borrowed more books each month for 3 consecutive months within the last year. <br>
+For each member, calculate the monthly count of borrowed books. <br>
+Check if there is any sequence of 3 consecutive months where the count of borrowed books strictly <br>
 increases (e.g., Jan < Feb < Mar). Order results by member_id and month.**
 
 ```sql
@@ -581,7 +580,7 @@ WHERE c.borrow_1 IS NOT NULL AND c.borrow_2 IS NOT NULL
 ORDER BY 1, year_month;
 ```
 
-**Q20. Find the top borrower(s) for each month — that is, the member(s) who borrowed 
+**Q20. Find the top borrower(s) for each month — that is, the member(s) who borrowed <br>
 the highest number of books in that month.**
 
 ```sql
