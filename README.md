@@ -475,24 +475,21 @@ HAVING COUNT(DISTINCT g.genre_id) =
 	 );
 ```
 
+**Q17. Find all members who have never borrowed any books. Sort the result by member_id.**
 
-/* 	Q17. Find all members who have never borrowed any books.
-- Show: member_id, first_name, last_name, email
-- Sort the result by member_id. */
-
-
+```sql
 -- With Left Join
 SELECT bl.member_id,
        m.first_name,
-			 m.last_name,
-			 m.email
+       m.last_name,
+       m.email
 FROM members AS m
 LEFT JOIN book_loans AS bl
 ON m.member_id = bl.member_id
 WHERE bl.member_id IS NULL;
+```
 
-
-
+```sql
 -- With 'No Exists' 
 SELECT m.member_id,
        m.first_name,
@@ -504,84 +501,75 @@ WHERE NOT EXISTS (
     FROM book_loans bl
     WHERE bl.member_id = m.member_id
 );
+```
 
+**Q18. Find the top 3 most borrowed books for each year based on the number of loans.
+For each year (from loan_date): Count how many times each book was borrowed.
+Sort by year ASC, rank_in_year ASC.**
 
-
-/* Q18. Find the top 3 most borrowed books for each year based on the number of loans.
-- For each year (from loan_date): Count how many times each book was borrowed.
-- Show: year, book_id, title, total_borrows, rank_in_year.
-- Sort by year ASC, rank_in_year ASC. */
-
-
+```sql
 WITH book_ranking AS (
-	SELECT bl.book_id,
-	       b.title,
-	       EXTRACT(YEAR FROM bl.loan_date) AS year,
-				 COUNT(bl.loan_id) AS total_borrows,
-				 DENSE_RANK() OVER(PARTITION BY EXTRACT(YEAR FROM bl.loan_date) 
-				   ORDER BY COUNT(bl.loan_id) DESC
-				 ) AS rank_in_year
-	FROM books AS b
-	INNER JOIN book_loans AS bl
-	ON b.book_id = bl.book_id
-	GROUP BY EXTRACT(YEAR FROM bl.loan_date),
-	         bl.book_id,
-					 b.title
+  SELECT bl.book_id,
+       b.title,
+       EXTRACT(YEAR FROM bl.loan_date) AS year,
+       COUNT(bl.loan_id) AS total_borrows,
+       DENSE_RANK() OVER(PARTITION BY EXTRACT(YEAR FROM bl.loan_date) 
+          ORDER BY COUNT(bl.loan_id) DESC
+       ) AS rank_in_year
+  FROM books AS b
+  INNER JOIN book_loans AS bl
+  ON b.book_id = bl.book_id
+  GROUP BY EXTRACT(YEAR FROM bl.loan_date),
+	   bl.book_id,
+           b.title
 )
 SELECT book_id,
        title,
-			 year,
-			 total_borrows,
-			 rank_in_year
+       year,
+       total_borrows,
+       rank_in_year
 FROM book_ranking
 WHERE rank_in_year <= 3
 ORDER BY year, rank_in_year ASC;
+```
 
+**Q19. Identify members who borrowed more books each month for 3 consecutive months within the last year.
+For each member, calculate the monthly count of borrowed books.
+Check if there is any sequence of 3 consecutive months where the count of borrowed books strictly 
+increases (e.g., Jan < Feb < Mar). Order results by member_id and month.**
 
-
-/* Q19. Identify members who borrowed more books each month for 3 consecutive months within the last year.
-- For each member, calculate the monthly count of borrowed books.
-- Check if there is any sequence of 3 consecutive months where the count of borrowed books strictly 
-increases (e.g., Jan < Feb < Mar).
-- Show: member_id, first_name, last_name, month (YYYY-MM), books_borrowed
-- Order results by member_id and month. */
-
-
+```sql
 WITH to_books_borrowed AS (
-	SELECT member_id,
-	       DATE_TRUNC('month', loan_date)
-				    AS month,
-				 COUNT(*) AS books_borrowed
-	FROM book_loans
-	WHERE loan_date >= CURRENT_DATE - INTERVAL '12 Month'
-	GROUP BY member_id,
-	         DATE_TRUNC('month', loan_date)
+  SELECT member_id,
+         DATE_TRUNC('month', loan_date)
+	  AS month,
+         COUNT(*) AS books_borrowed
+  FROM book_loans
+  WHERE loan_date >= CURRENT_DATE - INTERVAL '12 Month'
+  GROUP BY member_id,
+	   DATE_TRUNC('month', loan_date)
 ),
 check_trend AS (
-	SELECT member_id,
-	       month,
-				 books_borrowed,
-				 LAG(books_borrowed, 1) OVER(PARTITION BY member_id 
-				   ORDER BY month ASC
-				 ) AS borrow_1,
-				 LAG(books_borrowed, 2) OVER(PARTITION BY member_id 
-				   ORDER BY month ASC
-				 ) AS borrow_2,
-				 LAG(month, 1) OVER (PARTITION BY member_id 
-				   ORDER BY month
-				 ) AS prev_month,
-	        LAG(month, 2) OVER (PARTITION BY member_id 
-					  ORDER BY month
-				 ) AS prev_month_2
-	FROM to_books_borrowed
+  SELECT member_id,
+         month,
+         books_borrowed,
+         LAG(books_borrowed, 1) OVER(PARTITION BY member_id 
+	    ORDER BY month ASC) AS borrow_1,
+         LAG(books_borrowed, 2) OVER(PARTITION BY member_id 
+	    ORDER BY month ASC) AS borrow_2,
+         LAG(month, 1) OVER (PARTITION BY member_id 
+	    ORDER BY month) AS prev_month,
+         LAG(month, 2) OVER (PARTITION BY member_id 
+	    ORDER BY month) AS prev_month_2
+  FROM to_books_borrowed
 )
 SELECT c.member_id,
        m.first_name, 
-			 m.last_name,
-			 TO_CHAR(c.month, 'YYYY-MM') AS year_month,
+       m.last_name,
+       TO_CHAR(c.month, 'YYYY-MM') AS year_month,
        c.books_borrowed,
-			 TO_CHAR(c.prev_month, 'YYYY-MM') AS prev_month,
-			 TO_CHAR(c.prev_month_2, 'YYYY-MM') AS prev_month_2
+       TO_CHAR(c.prev_month, 'YYYY-MM') AS prev_month,
+       TO_CHAR(c.prev_month_2, 'YYYY-MM') AS prev_month_2
 FROM check_trend AS c
 INNER JOIN members AS m
 ON m.member_id = c.member_id
@@ -591,29 +579,28 @@ WHERE c.borrow_1 IS NOT NULL AND c.borrow_2 IS NOT NULL
 	AND c.month = c.prev_month + INTERVAL '1 month'
   AND c.prev_month = c.prev_month_2 + INTERVAL '1 month'
 ORDER BY 1, year_month;
+```
 
+**Q20. Find the top borrower(s) for each month — that is, the member(s) who borrowed 
+the highest number of books in that month.**
 
-
-/* Q20. Find the top borrower(s) for each month — that is, the member(s) who borrowed 
-the highest number of books in that month.
-- Output Columns: month ('2024-01'), member_id, total_books_borrowed. */
-
-
+```sql
 WITH borrowers AS (
-	SELECT member_id,
-	       DATE_TRUNC('month', loan_date) AS year_month,
-	       COUNT(loan_id) AS total_books_borrowed,
-				 ROW_NUMBER() OVER(PARTITION BY DATE_TRUNC('month', loan_date)
-				  ORDER BY COUNT(loan_id) DESC
-				 ) AS rn
-	FROM book_loans
-	GROUP BY member_id,
-	         DATE_TRUNC('month', loan_date)
-	ORDER BY DATE_TRUNC('month', loan_date)
+  SELECT member_id,
+         DATE_TRUNC('month', loan_date) AS year_month,
+         COUNT(loan_id) AS total_books_borrowed,
+	 ROW_NUMBER() OVER(PARTITION BY DATE_TRUNC('month', loan_date)
+	   ORDER BY COUNT(loan_id) DESC
+	 ) AS rn
+  FROM book_loans
+  GROUP BY member_id,
+  DATE_TRUNC('month', loan_date)
+  ORDER BY DATE_TRUNC('month', loan_date)
 )
 SELECT member_id,
        TO_CHAR(year_month, 'YYYY-MM') 
-			      AS year_month,
-			 total_books_borrowed
+	 AS year_month,
+       total_books_borrowed
 FROM borrowers
 WHERE rn = 1;
+```
