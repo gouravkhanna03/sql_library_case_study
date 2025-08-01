@@ -606,7 +606,7 @@ WHERE rn = 1;
 ```
 **END OF PROJECT**
 
-📞 ## 📬 Contact
+## 📞 Contact
 Created with ❤️ by Gaurav Khanna
 
 📧 Email: gouravkhanna03@gmail.com 
