@@ -72,7 +72,7 @@ This project is built for **resume showcase** and **interview demonstration**, r
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/gouravkhanna03/evergreen-city-library-sql.git
+git clone https://github.com/gouravkhanna03/sql_library_case_study.git
 cd evergreen-city-library-sql
 ```
 
