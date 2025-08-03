@@ -1,6 +1,8 @@
 # 📚 Evergreen City Library — Advanced SQL Analytics Project
 
-![Evergreen City Library](evergreen_city_library.png)
+<p align="center">
+  <img src="assets/evergreen_city_library.png" alt="Evergreen City Library Banner" width="800">
+</p>
 
 📍 A real-world SQL case study simulating a modern library's operations with thousands of rows of data, developed using PostgreSQL in **PgAdmin 4**.
 
