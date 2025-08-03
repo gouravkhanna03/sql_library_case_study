@@ -1,8 +1,8 @@
 # 📚 Evergreen City Library — Advanced SQL Analytics Project
 
-![Evergreen City Library]([https://raw.githubusercontent.com/your-username/your-repo-name/main/assets/library_project_banner.jpg](https://github.com/gouravkhanna03/sql_library_case_study/blob/main/evergreen_city_library.png))
+![Evergreen City Library](evergreen_city_library.png)
 
-> 📍 A real-world SQL case study simulating a modern library's operations with thousands of rows of data, developed using PostgreSQL in **PgAdmin 4**.
+📍 A real-world SQL case study simulating a modern library's operations with thousands of rows of data, developed using PostgreSQL in **PgAdmin 4**.
 
 ---
 
